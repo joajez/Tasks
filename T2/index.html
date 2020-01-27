@@ -1,33 +1,30 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Fun with JS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="form">
-        <div>
-            <label for="name">First Name: </label>
-            <input name="name" id="name" />
-        </div>
-        <div>
-            <label for="lastName">Last Name: </label>
-            <input name="lastName" id="lastName" />
-        </div>
-        <div>
-            <label for="gender">Gender: </label>
-            <input type="radio" id="male" name="gender" value="male" checked>Male
-            <input type="radio" id="female" name="gender" value="female">Female
-            <input type="radio" id="other" name="gender" value="other">Other
-        </div>
-        <button id="button">Add user</button>
+      <div>
+        <label for="name">First Name: </label>
+        <input name="name" id="name" />
+      </div>
+      <div>
+        <label for="lastName">Last Name: </label>
+        <input name="lastName" id="lastName" />
+      </div>
+      <div>
+        <label for="gender">Gender: </label>
+        <input type="radio" id="male" name="gender" value="male" checked />Male
+        <input type="radio" id="female" name="gender" value="female" />Female
+        <input type="radio" id="other" name="gender" value="other" />Other
+      </div>
+      <button id="button">Add user</button>
     </div>
-    <div id="details"></div>
+    <div id="details"><ul></ul></div>
     <script src="script.js"></script>
-
-</body>
-
+  </body>
 </html>

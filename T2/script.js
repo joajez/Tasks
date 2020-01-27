@@ -25,14 +25,14 @@ class User {
   displayDetails() {
     // todo: Add implementation
     // Return a string 'My name is <first name> <last name> and I'm a <gender>
-    return `My name is ${this.firstName} ${this.lastName} and I'm a ${this.gender}`;
+    return `My name is <b> ${this.firstName} ${this.lastName} </b> and I'm a ${this.gender}`;
   }
 }
 // To do:
 // Show user details
 
 const button = document.getElementById("button");
-const details = document.getElementById("details");
+const details = document.querySelector("#details ul");
 
 button.addEventListener("click", function() {
   const genderButtons = document.getElementsByName("gender");
