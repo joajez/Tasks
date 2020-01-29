@@ -34,11 +34,8 @@ class User {
 const button = document.getElementById("button");
 const details = document.querySelector("#details ul");
 
-button.addEventListener("click", function() {
-  const genderButtons = document.getElementsByName("gender");
-  for (i = 0; i < genderButtons.length; i++) {
-    if (genderButtons[i].checked) gender = genderButtons[i].value;
-  }
+button.addEventListener("click", function () {
+  const gender = document.querySelector('input[name="gender"]:checked').value;
   const user = new User(
     document.getElementById("name").value,
     document.getElementById("lastName").value,
@@ -47,9 +44,12 @@ button.addEventListener("click", function() {
   let usersList = new Users();
   usersList.add(user);
   usersArray = usersList.get();
-  for (i = 0; i < usersArray.length; i++) {
-    details.innerHTML += "<li>" + usersArray[i].displayDetails() + "</li>";
-  }
+
+  usersArray.map(writeDetails);
+
+  function writeDetails(user) {
+    details.innerHTML += `<li>${user.displayDetails()}</li>`;
+  };
   // To do:
   // create an object User
   // In the <div id="details"> display data from the form
