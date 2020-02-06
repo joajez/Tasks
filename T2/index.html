@@ -10,11 +10,11 @@
     <div class="form">
       <div>
         <label for="name">First Name: </label>
-        <input name="name" id="name" />
+        <input pattern="[a-zA-Z]{3,}" required name="name" id="name" />
       </div>
       <div>
         <label for="lastName">Last Name: </label>
-        <input name="lastName" id="lastName" />
+        <input pattern="[a-zA-Z]{3,}" required name="lastName" id="lastName" />
       </div>
       <div>
         <label for="gender">Gender: </label>
@@ -24,6 +24,7 @@
       </div>
       <button id="button">Add user</button>
     </div>
+    <div id="error"></div>
     <div id="details"><ul></ul></div>
     <script src="script.js"></script>
   </body>
