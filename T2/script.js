@@ -9,6 +9,15 @@ class Users {
   get() {
     return this.userList;
   }
+  checkIfExists(user) {
+    let exist = this.userList.some(
+      e =>
+        e.firstName === user.firstName &&
+        e.lastName === user.lastName &&
+        e.gender === user.gender
+    );
+    return exist;
+  }
 }
 
 class User {
@@ -27,18 +36,23 @@ class User {
     // Return a string 'My name is <first name> <last name> and I'm a <gender>
     return `My name is <b> ${this.firstName} ${this.lastName} </b> and I'm a ${this.gender}`;
   }
+  static validateName(firstname, lastname) {
+    const reg = /[a-zA-Z]{3,}/;
+    return reg.test(firstname) && reg.test(lastname);
+  }
 }
 // To do:
 // Show user details
-
 const button = document.getElementById("button");
 const details = document.querySelector("#details ul");
 const name = document.getElementById("name");
 const lastname = document.getElementById("lastName");
+const male = document.getElementById("male");
 button.disabled = true;
 let usersList = new Users();
+
 function checkValid() {
-  if (name.checkValidity() && lastname.checkValidity()) {
+  if (User.validateName(name.value, lastname.value)) {
     button.disabled = false;
   } else {
     button.disabled = true;
@@ -47,30 +61,23 @@ function checkValid() {
 function clearFields() {
   name.value = "";
   lastname.value = "";
+  male.checked = true;
   checkValid();
 }
 
 name.addEventListener("input", checkValid);
 lastname.addEventListener("input", checkValid);
 
-button.addEventListener("click", function() {
+button.addEventListener("click", function(e) {
+  e.preventDefault();
+
   details.innerHTML = "";
   const gender = document.querySelector('input[name="gender"]:checked').value;
-  const user = new User(
-    document.getElementById("name").value,
-    document.getElementById("lastName").value,
-    gender
-  );
+  const user = new User(name.value, lastname.value, gender);
   usersArray = usersList.get();
-  exist = usersArray.some(
-    e =>
-      e.firstName === user.firstName &&
-      e.lastName === user.lastName &&
-      e.gender === user.gender
-  );
 
   try {
-    if (exist) {
+    if (usersList.checkIfExists(user)) {
       throw "User already exists!";
     } else {
       usersList.add(user);
