@@ -52,11 +52,7 @@ button.disabled = true;
 let usersList = new Users();
 
 function checkValid() {
-  if (User.validateName(name.value, lastname.value)) {
-    button.disabled = false;
-  } else {
-    button.disabled = true;
-  }
+  button.disabled = !User.validateName(name.value, lastname.value);
 }
 function clearFields() {
   name.value = "";
