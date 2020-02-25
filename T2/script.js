@@ -1,3 +1,4 @@
+let userId = 1;
 class Users {
   constructor() {
     this.userList = [];
@@ -6,6 +7,14 @@ class Users {
   add(User) {
     this.userList.push(User);
   }
+
+  delete(userId) {
+    let filtered = this.userList.filter(function(el) {
+      return el.userId != userId;
+    });
+    this.userList = filtered;
+  }
+
   get() {
     return this.userList;
   }
@@ -29,13 +38,27 @@ class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.gender = gender;
+    this.creationDate = Date(Date.now()).toLocaleString();
+    this.userId = userId++;
   }
 
+  // displayDetails() {
+  //   // todo: Add implementation
+  //   // Return a string 'My name is <first name> <last name> and I'm a <gender>
+  //   return `My name is <b> ${this.firstName} ${this.lastName} </b> and I'm a ${this.gender}`;
+  // }
   displayDetails() {
-    // todo: Add implementation
-    // Return a string 'My name is <first name> <last name> and I'm a <gender>
-    return `My name is <b> ${this.firstName} ${this.lastName} </b> and I'm a ${this.gender}`;
+    id += 1;
+    return `<tr>
+    <td>${id}</td>
+    <td>${this.firstName}</td>
+    <td>${this.lastName}</td>
+    <td>${this.gender}</td>
+    <td>${this.creationDate}</td>
+    <td class="parentDelete"><button id="buttonDelete" class ="${this.userId}" >Delete</button></td>
+  </tr>`;
   }
+
   static validateName(firstname, lastname) {
     const reg = /[a-zA-Z]{3,}/;
     return reg.test(firstname) && reg.test(lastname);
@@ -44,12 +67,14 @@ class User {
 // To do:
 // Show user details
 const button = document.getElementById("button");
-const details = document.querySelector("#details ul");
+const buttonDelete = document.getElementById("buttonDelete");
+const details = document.querySelector("#details");
 const name = document.getElementById("name");
 const lastname = document.getElementById("lastName");
 const male = document.getElementById("male");
 button.disabled = true;
 let usersList = new Users();
+let id = 0;
 
 function checkValid() {
   button.disabled = !User.validateName(name.value, lastname.value);
@@ -67,7 +92,14 @@ lastname.addEventListener("input", checkValid);
 button.addEventListener("click", function(e) {
   e.preventDefault();
 
-  details.innerHTML = "";
+  details.innerHTML = `<tr>
+  <th>No.</th>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Gender</th>
+  <th>Creation Date</th>
+  <th></th>
+</tr>`;
   const gender = document.querySelector('input[name="gender"]:checked').value;
   const user = new User(name.value, lastname.value, gender);
   usersArray = usersList.get();
@@ -84,10 +116,9 @@ button.addEventListener("click", function(e) {
   }
 
   usersArray = usersList.get();
+  id = 0;
   usersArray.map(writeDetails);
-  function writeDetails(user) {
-    details.innerHTML += `<li>${user.displayDetails()}</li>`;
-  }
+
   clearFields();
 
   // To do:
@@ -96,6 +127,30 @@ button.addEventListener("click", function(e) {
   // tip: get string with details from user.displayDetails()
 });
 
+// buttonDelete.addEventListener("click", function(e) {
+//   e.preventDefault();
+// });
+
+document.getElementById("details").addEventListener("click", function(event) {
+  if (event.target.id === "buttonDelete") {
+    usersList.delete(event.target.className);
+    usersArray = usersList.get();
+    id = 0;
+    details.innerHTML = `<tr>
+  <th>No.</th>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Gender</th>
+  <th>Creation Date</th>
+  <th></th>
+</tr>`;
+    usersArray.map(writeDetails);
+  }
+});
+
+function writeDetails(user) {
+  details.innerHTML += user.displayDetails();
+}
 // Tips:
 // To get the gender value You will need to find checked radio button
 // Knowledge base
