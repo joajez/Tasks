@@ -38,7 +38,7 @@ class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.gender = gender;
-    this.creationDate = Date(Date.now()).toLocaleString();
+    this.creationDate = Date(Date.now());
     this.userId = userId++;
   }
 
@@ -54,8 +54,10 @@ class User {
     <td>${this.firstName}</td>
     <td>${this.lastName}</td>
     <td>${this.gender}</td>
-    <td>${this.creationDate}</td>
-    <td class="parentDelete"><button id="buttonDelete" class ="${this.userId}" >Delete</button></td>
+    <td>${moment(this.creationDate).format("DD/MM/YYYY HH:mm:ss")}</td>
+    <td class="parentDelete"><button id="buttonDelete" class ="${
+      this.userId
+    }" >Delete</button></td>
   </tr>`;
   }
 
