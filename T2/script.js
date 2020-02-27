@@ -1,4 +1,3 @@
-let userId = 1;
 class Users {
   constructor() {
     this.userList = [];
@@ -34,12 +33,16 @@ class User {
   lastName;
   gender;
 
-  constructor(firstName, lastName, gender) {
+  constructor(firstName, lastName, gender, usersList) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.gender = gender;
-    this.creationDate = Date(Date.now());
-    this.userId = userId++;
+    this.creationDate = new Date();
+    this.userId =
+      usersList[usersList.length - 1] != undefined
+        ? usersList[usersList.length - 1].userId + 1
+        : 1;
+    console.log(usersList);
   }
 
   // displayDetails() {
@@ -47,15 +50,15 @@ class User {
   //   // Return a string 'My name is <first name> <last name> and I'm a <gender>
   //   return `My name is <b> ${this.firstName} ${this.lastName} </b> and I'm a ${this.gender}`;
   // }
-  displayDetails() {
-    id += 1;
+  displayDetails(id) {
+    id = id + 1;
     return `<tr>
     <td>${id}</td>
     <td>${this.firstName}</td>
     <td>${this.lastName}</td>
     <td>${this.gender}</td>
     <td>${moment(this.creationDate).format("DD/MM/YYYY HH:mm:ss")}</td>
-    <td class="parentDelete"><button id="buttonDelete" class ="${
+    <td class="parentDelete"><button class="buttonDelete" id ="${
       this.userId
     }" >Delete</button></td>
   </tr>`;
@@ -69,7 +72,7 @@ class User {
 // To do:
 // Show user details
 const button = document.getElementById("button");
-const buttonDelete = document.getElementById("buttonDelete");
+const buttonDelete = document.getElementsByClassName("buttonDelete");
 const details = document.querySelector("#details");
 const name = document.getElementById("name");
 const lastname = document.getElementById("lastName");
@@ -103,8 +106,8 @@ button.addEventListener("click", function(e) {
   <th></th>
 </tr>`;
   const gender = document.querySelector('input[name="gender"]:checked').value;
-  const user = new User(name.value, lastname.value, gender);
   usersArray = usersList.get();
+  const user = new User(name.value, lastname.value, gender, usersArray);
 
   try {
     if (usersList.checkIfExists(user)) {
@@ -118,7 +121,6 @@ button.addEventListener("click", function(e) {
   }
 
   usersArray = usersList.get();
-  id = 0;
   usersArray.map(writeDetails);
 
   clearFields();
@@ -134,8 +136,10 @@ button.addEventListener("click", function(e) {
 // });
 
 document.getElementById("details").addEventListener("click", function(event) {
-  if (event.target.id === "buttonDelete") {
-    usersList.delete(event.target.className);
+  if (event.target.className === "buttonDelete") {
+    console.log(event.target.id);
+
+    usersList.delete(event.target.id);
     usersArray = usersList.get();
     id = 0;
     details.innerHTML = `<tr>
@@ -150,8 +154,8 @@ document.getElementById("details").addEventListener("click", function(event) {
   }
 });
 
-function writeDetails(user) {
-  details.innerHTML += user.displayDetails();
+function writeDetails(user, id) {
+  details.innerHTML += user.displayDetails(id);
 }
 // Tips:
 // To get the gender value You will need to find checked radio button
