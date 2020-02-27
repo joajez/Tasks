@@ -79,7 +79,6 @@ const lastname = document.getElementById("lastName");
 const male = document.getElementById("male");
 button.disabled = true;
 let usersList = new Users();
-let id = 0;
 
 function checkValid() {
   button.disabled = !User.validateName(name.value, lastname.value);
