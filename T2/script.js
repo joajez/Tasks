@@ -13,6 +13,12 @@ class Users {
     });
     this.userList = filtered;
   }
+  update(id, firstname, lastname, gender) {
+    let objIndex = this.userList.findIndex(obj => obj.userId == id);
+    this.userList[objIndex].firstName = firstname;
+    this.userList[objIndex].lastName = lastname;
+    this.userList[objIndex].gender = gender;
+  }
 
   get() {
     return this.userList;
@@ -39,7 +45,7 @@ class User {
     this.gender = gender;
     this.creationDate = new Date();
     this.userId =
-      usersList[usersList.length - 1] != undefined
+      usersList[usersList.length - 1] !== undefined
         ? usersList[usersList.length - 1].userId + 1
         : 1;
     console.log(usersList);
@@ -53,15 +59,25 @@ class User {
   displayDetails(id) {
     id = id + 1;
     return `<tr>
-    <td>${id}</td>
-    <td>${this.firstName}</td>
-    <td>${this.lastName}</td>
-    <td>${this.gender}</td>
-    <td>${moment(this.creationDate).format("DD/MM/YYYY HH:mm:ss")}</td>
-    <td class="parentDelete"><button class="buttonDelete" id ="${
+    <td class ="id${this.userId}">${id}</td>
+    <td class ="name${this.userId}" >${this.firstName}</td>
+    <td class ="lastName${this.userId}">${this.lastName}</td>
+    <td class ="gender${this.userId}">${this.gender}</td>
+    <td class ="date${this.userId}" >${moment(this.creationDate).format(
+      "DD/MM/YYYY HH:mm:ss"
+    )}</td>
+    <td><button class="buttonEdit" id ="edit${
+      this.userId
+    }">Edit</button><button class="buttonDelete" id ="delete${
       this.userId
     }" >Delete</button></td>
   </tr>`;
+  }
+
+  edit(name, lastname, gender) {
+    this.firstName = name;
+    this.lastName = lastname;
+    this.gender = gender;
   }
 
   static validateName(firstname, lastname) {
@@ -135,10 +151,9 @@ button.addEventListener("click", function(e) {
 // });
 
 document.getElementById("details").addEventListener("click", function(event) {
+  const idEdit = event.target.id.match(/\d+/g);
   if (event.target.className === "buttonDelete") {
-    console.log(event.target.id);
-
-    usersList.delete(event.target.id);
+    usersList.delete(event.target.id.match(/\d+/g));
     usersArray = usersList.get();
     id = 0;
     details.innerHTML = `<tr>
@@ -151,39 +166,46 @@ document.getElementById("details").addEventListener("click", function(event) {
 </tr>`;
     usersArray.map(writeDetails);
   }
+  if (event.target.className === "buttonSave") {
+    usersList.update(
+      idEdit,
+      document.querySelector(`.name${idEdit} input`).value,
+      document.querySelector(`.lastName${idEdit} input`).value,
+      document.querySelector(`.gender${idEdit} input`).value
+    );
+    usersArray = usersList.get();
+    details.innerHTML = `<tr>
+  <th>No.</th>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Gender</th>
+  <th>Creation Date</th>
+  <th></th>
+</tr>`;
+    console.log(usersArray);
+    usersArray.map(writeDetails);
+    event.target.classList.remove("buttonSave");
+    event.target.classList.add("buttonEdit");
+  }
+  if (event.target.className === "buttonEdit") {
+    const nameEdit = document.querySelector(`.name${idEdit}`);
+    const lastNameEdit = document.querySelector(`.lastName${idEdit}`);
+    const genderEdit = document.querySelector(`.gender${idEdit}`);
+    const buttonEdit = document.querySelector(`#edit${idEdit}`);
+    usersArray = usersList.get();
+    buttonEdit.innerHTML = "Save";
+    usersArray.map(function(obj) {
+      if (obj.userId == idEdit) {
+        nameEdit.innerHTML = `<input value = ${obj.firstName}>`;
+        lastNameEdit.innerHTML = `<input value = ${obj.lastName}>`;
+        genderEdit.innerHTML = `<input value = ${obj.gender}>`;
+      }
+    });
+    event.target.classList.add("buttonSave");
+    event.target.classList.remove("buttonEdit");
+  }
 });
 
 function writeDetails(user, id) {
   details.innerHTML += user.displayDetails(id);
 }
-// Tips:
-// To get the gender value You will need to find checked radio button
-// Knowledge base
-// Button type radio
-// https://www.w3schools.com/jsref/prop_radio_checked.asp
-// Object creation
-//
-
-// TODO
-// 1. Change the name of button to "Add user"
-// 2. Create class Users.
-// properties of class: list (Array of User objects)
-// methods:
-// - add(user) -> should add user to the list (push to the existing list)
-// - get() -> should return list of all users
-// 3. Change the behavior of "Add user" button click event
-// - create User (done already)
-// - add created user to Users list
-// - display the list in <div id="details"> users.get() (tip: list is an array, you need to iterate)
-// You can play with html and CSS to get better view :)
-
-// TODO
-// 1. Disable "Add User" button
-// 2. Add simple validation:
-// - first name, last name - required fields, min 3 chars (only letters), please be aware about whitespaces
-// 3. Enable "Add User" button when first and last name fields mets expectations
-// 5. On "Add User" button:
-// - check if given user with given first, last name and gender already exist in the list
-// - if user doesn't exist in the list add it to the list and show (already done)
-// - if user exist in the list do not add it to the list and show error message (below form)
-// 4. After "Add user" button clicked clear fields value in the form
