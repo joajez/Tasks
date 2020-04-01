@@ -36,6 +36,10 @@ button {
 
 }
 
+.hide {
+    display: None;
+}
+
 button:hover {
     cursor: pointer;
     background-color: #eee;
