@@ -1,0 +1,16 @@
+{
+"users": [
+{
+"firstName": "Jane",
+"lastName": "Doe",
+"gender": "F",
+"timestamp": "1585812157573"
+},
+{
+"firstName": "Jack",
+"lastName": "Black",
+"gender": "M",
+"timestamp": "1585812157573"
+}
+]
+}

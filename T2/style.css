@@ -18,7 +18,8 @@ input {
     border: none;
     border: 1px solid black;
     border-radius: 5px;
-    padding-left: 3px;
+    /* padding-left: 3px; */
+    padding: 7px 3px;
 }
 
 #male {
@@ -26,7 +27,7 @@ input {
 }
 
 
-button {
+button, #fileUsers {
     margin: 10px 10px;
     padding: 10px 30px;
     background-color: #fff;
@@ -44,13 +45,6 @@ button:hover {
     cursor: pointer;
     background-color: #eee;
 }
-
-/* 
-#buttonDelete {
-    margin: 2px 5px;
-    padding: 5px 15px;
-
-} */
 
 th,
 td {
