@@ -113,6 +113,7 @@ function clearFields() {
 }
 
 function createUsersTable(usersArray) {
+  let usersRows = "";
   let tableRows = `<tr>
       <th>No.</th>
       <th>First Name</th>
@@ -121,14 +122,11 @@ function createUsersTable(usersArray) {
       <th>Creation Date</th>
       <th></th>
     </tr>`;
-  tableRows += usersArray.map(writeDetails);
+  usersArray.map(function (user, id) {
+    usersRows += user.displayDetails(id);
+  });
+  tableRows += usersRows;
   return tableRows;
-}
-
-function writeDetails(user, id) {
-  let usersRows = "";
-  usersRows += user.displayDetails(id);
-  return usersRows;
 }
 
 function addIfNotExist(user, usersList) {
