@@ -228,7 +228,7 @@ button.addEventListener("click", function (e) {
   clearFields();
 });
 
-loadFileButton.addEventListener("click", function (e) {
+loadFileButton.addEventListener("click", function () {
   document.getElementById("error").innerHTML = "";
   let fileInput = document.getElementById("fileUsers");
   let obj;
