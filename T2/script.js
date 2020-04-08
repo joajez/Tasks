@@ -241,7 +241,14 @@ loadFileButton.addEventListener("click", function (e) {
       for (user in obj.users) {
         usersArray = usersList.get();
         let date = new Date(obj.users[user].timestamp * 1000);
-        let gender = obj.users[user].gender === "F" ? "female" : "male";
+        let gender;
+        if (obj.users[user].gender === "F") {
+          gender = "female";
+        } else if (obj.users[user].gender === "M") {
+          gender = "male";
+        } else {
+          gender = "other";
+        }
         userJSON = new User(
           obj.users[user].firstName,
           obj.users[user].lastName,
