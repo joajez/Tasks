@@ -137,7 +137,7 @@ function addIfNotExist(user, usersList) {
       throw `User ${user.firstName} ${user.lastName} (${user.gender}) already exists!`;
     } else {
       usersList.add(user);
-      document.getElementById("error").innerHTML = "";
+      document.getElementById("error").innerHTML += "";
     }
   } catch (err) {
     document.getElementById("error").innerHTML +=
@@ -229,16 +229,15 @@ button.addEventListener("click", function (e) {
 });
 
 loadFileButton.addEventListener("click", function (e) {
+  document.getElementById("error").innerHTML = "";
   let fileInput = document.getElementById("fileUsers");
   let obj;
-  document.getElementById("error").innerHTML = "";
   let file = fileInput.files[0];
   if (file) {
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function (e) {
       obj = JSON.parse(e.target.result);
-      console.log(obj);
       for (user in obj.users) {
         usersArray = usersList.get();
         let date = new Date(obj.users[user].timestamp * 1000);
