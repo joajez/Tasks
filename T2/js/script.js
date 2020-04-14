@@ -53,7 +53,7 @@ function addIfNotExist(user, usersList) {
 }
 
 function addUsersFromFile(fileInput) {
-  let obj;
+  let obj, date, gender;
   let file = fileInput.files[0];
   if (file) {
     let reader = new FileReader();
@@ -62,7 +62,7 @@ function addUsersFromFile(fileInput) {
       obj = JSON.parse(e.target.result);
       for (user in obj.users) {
         usersArray = usersList.get();
-        let date = new Date(obj.users[user].timestamp);
+        date = new Date(obj.users[user].timestamp);
         gender = identifyGender(obj.users[user].gender);
         userJSON = new User(
           obj.users[user].firstName,

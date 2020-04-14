@@ -49,21 +49,15 @@ function updateButtons() {
     let buttonsSave = document.querySelectorAll(".buttonSave");
 
     buttonsDelete.forEach(function (elem) {
-        elem.addEventListener("click", (e) => {
-            deleteHandler(e);
-        });
+        elem.addEventListener("click", deleteHandler);
     });
 
     buttonsEdit.forEach(function (elem) {
-        elem.addEventListener("click", (e) => {
-            editHandler(e);
-        });
+        elem.addEventListener("click", editHandler);
     });
 
     buttonsSave.forEach(function (elem) {
-        elem.addEventListener("click", (e) => {
-            saveHandler(e);
-        });
+        elem.addEventListener("click", saveHandler);
     });
 }
 
